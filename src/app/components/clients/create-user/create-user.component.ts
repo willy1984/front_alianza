@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../../services/clients.service';
 import { AlertService } from '../../../services/alert.service';
+import { Constants } from '../../../constants';
+import { ResponseDto } from '../../../models/responseDto';
 
 @Component({
   selector: 'app-create-user',
@@ -34,16 +36,35 @@ export class CreateUserComponent implements OnInit {
 
   create(): void {
     if (this.formUser.valid) {
+      const newSharekey: string = this.formUser.value.sharedKey;
+      this.formUser.value.sharedKey = newSharekey.toLowerCase();
       this.service.createClient(this.formUser.value).subscribe({
-        next: (resp: any) => {
+        next: (resp: ResponseDto) => {
+          if (resp.state === 200) {
+            this.message.getInfoMessageCreate(
+              'Succes',
+              'Client created successfully',
+              'success'
+            );
+            this.passEntry.emit(1);
+          }
+        },
+        error: () => {
           this.message.getInfoMessageCreate(
-            'Succes',
-            'Client created successfully',
-            'success'
+            'Error',
+            'Query Failed',
+            'error'
           );
-          this.passEntry.emit(1);
         }
       });
+    }
+  }
+
+  soloNumeros($event: KeyboardEvent) {
+    const stringKey: string = $event.key;
+    const match = stringKey.match(Constants.SOLO_NUMEROS_PATTERN);
+    if (!match) {
+      $event.preventDefault();
     }
   }
 

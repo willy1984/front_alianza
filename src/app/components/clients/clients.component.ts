@@ -29,6 +29,9 @@ export class ClientsComponent implements OnInit {
     this.getClients();
   }
 
+  /**
+   * @description Method to get customers
+   */
   getClients(): void {
     this.services.getClients().subscribe({
       next: (resp: ResponseDto) => {
@@ -48,6 +51,10 @@ export class ClientsComponent implements OnInit {
     });
   }
 
+  /**
+   * @description Create to get customers
+   * @param cliente 
+   */
   createClient(cliente: any) {
     const modalRef = this.modalService.open(CreateUserComponent, {
       data: cliente
@@ -82,7 +89,7 @@ export class ClientsComponent implements OnInit {
     this.services.getBySharedKey(shared).subscribe({
       next: (resp: ResponseDto) => {
         this.dataSource = new MatTableDataSource(resp.response);
-      this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginator;
       },
       error: () => {
         this.message.getInfoMessageCreate(
