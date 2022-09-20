@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <h1>Registre el usuario</h1>
+            <form [formGroup]="formUser">
+                <div class="row">
+                    <div class="col-6 my-3">
+                        <label for="">Shared Key</label>
+                        <input type="text" class="form-control" maxlength="50" formControlName="sharedKey">
+                        <div class="text-end container-error-message text-danger"
+                            *ngIf="(sharedKey?.invalid && sharedKey?.dirty) || (sharedKey?.invalid && sharedKey?.touched)">
+                            <label class=" label-error content-login font-weight-bold">
+                                Shared key required.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6 my-3">
+                        <label for="bussinesId">Bussines Id</label>
+                        <input type="text" class="form-control" maxlength="80" formControlName="bussinesId">
+                        <div class="text-end container-error-message text-danger"
+                            *ngIf="(bussinesId?.invalid && bussinesId?.dirty) || (bussinesId?.invalid && bussinesId?.touched)">
+                            <label class=" label-error content-login font-weight-bold">
+                                Bussines Id required.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6 my-3">
+                        <label for="">Email</label>
+                        <input type="email" class="form-control" maxlength="50" formControlName="email">
+                        <div class="text-end container-error-message text-danger"
+                            *ngIf="(email?.invalid && email?.dirty) || (email?.invalid && email?.touched)">
+                            <label class=" label-error content-login font-weight-bold">
+                                Email required.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6 my-3">
+                        <label for="">Phone</label>
+                        <input type="text" class="form-control" formControlName="phone">
+                    </div>
+                    <div class="col-6 my-3">
+                        <label for="">Data Added</label>
+                        <input type="text" class="form-control" formControlName="dataAdded">
+                    </div>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-danger mt-3" [mat-dialog-close]="false">Cancel</button>
+                    <button class="btn btn-primary mt-3" (click)="create()" [disabled]="formUser.invalid">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
