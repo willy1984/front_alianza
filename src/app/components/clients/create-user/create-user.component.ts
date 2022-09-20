@@ -36,7 +36,6 @@ export class CreateUserComponent implements OnInit {
     if (this.formUser.valid) {
       this.service.createClient(this.formUser.value).subscribe({
         next: (resp: any) => {
-          console.log(resp)
           this.message.getInfoMessageCreate(
             'Succes',
             'Client created successfully',

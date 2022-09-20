@@ -17,6 +17,8 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = ['sharedId', 'businessId', 'email', 'phone', 'dataAdded', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
+  filter: any;
+  temp: any = [];
 
   constructor(private services: ClientsService,
               public modalService: MatDialog,
@@ -33,7 +35,7 @@ export class ClientsComponent implements OnInit {
         if (resp.state === 200) {
           this.dataSource = new MatTableDataSource(resp.response);
           this.dataSource.paginator = this.paginator;
-          console.log(this.dataSource)
+          this.temp = [this.dataSource]
         }
       },
       error: () => {
@@ -55,6 +57,40 @@ export class ClientsComponent implements OnInit {
       modalRef.close();
       this.getClients()
     }
+    });
+  }
+
+  /**
+   * Esta funcionalidad se realiza cuando se requieres buscar en front
+   * @param event 
+   */
+  updateFilterdesdeFront(event: string) {
+    const val = event.toLowerCase();
+    const temp = this.temp[0].filteredData.filter( (item: any) => {
+      if (item) {
+        return item.sharedKey.toLowerCase().indexOf(val) !== -1 || !val;
+      }
+      else {
+        this.dataSource.filteredData = temp;
+        return false;
+      }    });
+      this.dataSource = new MatTableDataSource(temp);
+      this.dataSource.paginator = this.paginator;
+  }
+
+  updateFilter(shared: string) {
+    this.services.getBySharedKey(shared).subscribe({
+      next: (resp: ResponseDto) => {
+        this.dataSource = new MatTableDataSource(resp.response);
+      this.dataSource.paginator = this.paginator;
+      },
+      error: () => {
+        this.message.getInfoMessageCreate(
+          'Error',
+          'Query Failed',
+          'error'
+        );
+      }
     });
   }
 

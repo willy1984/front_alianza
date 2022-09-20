@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateUserComponent } from './components/clients/create-user/create-user.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HomeComponent } from './components/home/home.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     MatIconModule,
     MatPaginatorModule,
     MatTableModule,

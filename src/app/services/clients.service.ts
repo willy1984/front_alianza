@@ -20,4 +20,8 @@ export class ClientsService {
   createClient(client: any): Observable<any> {
     return this.http.post<any>(`${this.url}${Constants.CREATE_CLIENT}`, client)
   }
+
+  getBySharedKey(sharedKey: string): Observable<any> {
+    return this.http.get<any>(`${this.url}${Constants.GET_BY_SHARED_KEY}${sharedKey}`);
+  }
 }
