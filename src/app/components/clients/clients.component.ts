@@ -101,4 +101,26 @@ export class ClientsComponent implements OnInit {
     });
   }
 
+  deleteClient(id: number): void {
+    this.services.deleteClient(id).subscribe({
+      next: (resp: ResponseDto) => {
+        if (resp.state === 200) {
+          this.message.getInfoMessageCreate(
+            'Succes',
+            'Client delete successfully',
+            'success'
+          );
+          this.getClients();
+        }
+      },
+      error: () => {
+        this.message.getInfoMessageCreate(
+          'Error',
+          'Query Failed',
+          'error'
+        );
+      }
+    });
+  }
+
 }

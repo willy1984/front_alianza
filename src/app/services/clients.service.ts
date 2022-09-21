@@ -25,4 +25,8 @@ export class ClientsService {
   getBySharedKey(sharedKey: string): Observable<ResponseDto> {
     return this.http.get<any>(`${this.url}${Constants.GET_BY_SHARED_KEY}${sharedKey}`);
   }
+
+  deleteClient(id: number): Observable<ResponseDto> {
+    return this.http.delete<any>(`${this.url}${Constants.DELETE_CLIENT}${id}`);
+  }
 }
